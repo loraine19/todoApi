@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+//USERS
+model user {
+  id           Int    @id @default(autoincrement())
+  userName     String
+  email        String @unique
+  password     String
+  color        String @default("white")
+  sort         String @default("priority")
+  categoryHome String @default("...")
+  list1        String @default("...")
+  list2        String @default("Travail")
+  list3        String @default("Course")
+  list4        String @default("Maison")
+  task         task[]
+}
+
+//TASKS
+model task {
+  id       Int      @id @default(autoincrement())
+  content  String
+  issue    DateTime
+  priority String
+  done     Boolean  @default(false)
+  category String   @default("...")
+  author   user     @relation(fields: [authorId], references: [id])
+  authorId Int
+}
