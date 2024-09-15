@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 const prisma = new PrismaClient();
 
 // LIRE
-export async function GET(request: Request) {
+export async function GET(_request: Request) {
   try {
     const users = await prisma.user.findMany();
     return NextResponse.json(users, { status: 200 });
