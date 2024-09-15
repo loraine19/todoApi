@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 const prisma = new PrismaClient();
 
-// LIRE
+// GET
 export async function GET(request: Request) {
   try {
     const tasks = await prisma.task.findMany();
@@ -13,33 +13,22 @@ export async function GET(request: Request) {
   }
 }
 
-// AJOUTER
-// AJOUTER
-
-
-
+// POST
 export async function POST(request: Request) {
   try {
-    const { content, issue, priority, author } = await request.json();
-
-    
-
-    // Créer un nouvel employé avec Prisma
+    const { content, userId } = await request.json();
     const newtask = await prisma.task.create({
-      data: { content, issue, priority, author },
+      data: { content, userId },
   });
-
-    // Retourner la réponse avec le nouvel employé créé
     return NextResponse.json(newtask, { status: 201 });
   } catch (error) {
     console.error('Failed to create task:', error);
-    // Retourner une réponse d'erreur avec un statut 500 en cas d'échec
     return NextResponse.json({ error: 'Failed to create task' }, { status: 500 });
   }
 }
 
 
-// MODIFIER
+// PATCH
 export async function PATCH(request: Request) {
   try {
     const { id, ...data } = await request.json();
@@ -56,7 +45,7 @@ export async function PATCH(request: Request) {
   }
 }
 
-// SUPPRIMER
+// DELETE
 export async function DELETE(request: Request) {
   try {
     const { id } = await request.json();
