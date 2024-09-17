@@ -1,14 +1,18 @@
-version: '3.8'
+version: '3.9'
+
 services:
-  app:
-    image: openai-demo-app
+  be:
+    image: be
+    ports:
+      - "8080:8080"
+
+  fe:
     build:
-      context: ./
-      target: dev
+      context: ./frontend
       dockerfile: Dockerfile
-    volumes:
-        - .:/app
-        - /app/node_modules
-        - /app/.next
     ports:
       - "3000:3000"
+    environment:
+      - API_BASE=be:8080
+    depends_on:
+      - be
