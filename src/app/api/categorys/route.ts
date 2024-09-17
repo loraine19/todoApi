@@ -4,10 +4,10 @@ import { NextResponse } from 'next/server';
 const prisma = new PrismaClient();
 
 // LIRE
-export async function GET(_request: Request) {
+export async function GET(request: Request) {
   try {
-    const categories = await prisma.category.findMany();
-    return NextResponse.json(categories, { status: 200 });
+    const categorys = await prisma.category.findMany();
+    return NextResponse.json(categorys, { status: 200 });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to fetch categorys' }, { status: 500 });
   }
