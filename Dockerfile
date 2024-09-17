@@ -18,8 +18,11 @@ RUN npm ci
 
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nextjs -u 1001
-USER nextjs
+COPY --from=build --chown=nextjs:nodejs /app/database ./prisma
+COPY --from=build --chown=nextjs:nodejs /app/node_modules/@prisma ./node_modules/@prisma
 
+RUN npx prisma generate --schema=prisma/schema.prisma
+USER nextjs
 
 COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
