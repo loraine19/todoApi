@@ -1,18 +1,16 @@
 {
-  "name": "todoapi",
+  "name": "rest-api",
   "version": "0.1.0",
-  "private": false,
+  "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "postinstall": "npx prisma generate"
+    "lint": "next lint"
   },
   "dependencies": {
-    "@nestjs/config": "^3.2.3",
-    "@prisma/client": "^5.19.1",
-    "next": "14.2.11",
+    "@prisma/client": "^5.16.1",
+    "next": "14.2.4",
     "react": "^18",
     "react-dom": "^18"
   },
@@ -21,8 +19,10 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
-    "eslint-config-next": "14.2.11",
-    "prisma": "^5.19.1",
+    "eslint-config-next": "14.2.4",
+    "postcss": "^8",
+    "prisma": "^5.16.1",
+    "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
 }

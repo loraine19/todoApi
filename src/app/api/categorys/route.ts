@@ -22,7 +22,7 @@ export async function POST(request: Request) {
   });
     return NextResponse.json(newcategory, { status: 201 });
   } catch (error) {
-    console.error('Failed to create category:', error);
+    console.error(error);
     return NextResponse.json({ error: 'Failed to create category' }, { status: 500 });
   }
 }
