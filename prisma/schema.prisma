@@ -3,6 +3,8 @@
 
 generator client {
   provider = "prisma-client-js"
+  //add for docker =>
+  output   = "./generated/client"
 }
 
 datasource db {
