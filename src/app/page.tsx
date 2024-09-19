@@ -1,53 +1,45 @@
-"use client"
-import { useEffect, useState } from 'react';
+"use server"
+import UserForm from "@/components/UserForm";
+import styles from "./page.module.css";
+import { PrismaClient } from "@prisma/client";
+import { NextRequest } from "next/server";
+import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal, AwaitedReactNode } from "react";
 
-interface user {
-  id: number;
-  userName: string;
-}
+const prisma = new PrismaClient();
 
-export default function Home() {
-  const [users, setUsers] = useState<user[]>([]);
+/* try
+
+}*/
 
 
-  // Function to fetch all Users
-  const fetchUsers = () => {
-    fetch('/api/users')
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Failed to fetch Users');
-        }
-        return response.json();
-      })
-      .then((data) => setUsers(data))
-      .catch((error) => console.error(error));
-  };
+export default async function Home() {
+  let data = await fetch(process.env.URL + '/api/users', { method: 'GET' })
+  let result = await data.json()
+  let users = result.users
 
-  // Fetch Users on component mount
-  useEffect(() => {
-    fetchUsers();
-  }, []);
+  const getData = async (endPoint: string, method: any) => {
+    let data = await fetch(process.env.URL + endPoint, { method: method })
+    let result = await data.json()
+    console.log(result)
+    return result
+  }
+  getData('/api/users', 'GET')
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4 p-8">user List</h1>
-      <table className="min-w-full bg-white">
-        <thead>
-          <tr>
-            <th className="py-2 px-4 border-b">User Name</th>
-            {/* Remove Actions header */}
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.id}>
-              <td className="p-8 border-b">{user.userName}</td>
-              {/* Remove Actions column */}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      {/* Remove Add New user section */}
-    </div>
+    <main className={styles.main}>
+      <h1>MY FIRST API </h1>
+      <nav>
+        <a href="./api/users">users</a>
+        <a href="./api/tasks">tasks</a>
+        <a href="./api/categorys">categories</a>
+        <a href="./api/preferences">preferences</a></nav>
+
+      <ol>
+        {users.map((user: { id: Key | null | undefined; userName: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; }) => (
+          <li key={user.id}>{user.userName}</li>
+        ))}
+      </ol>
+      <UserForm />
+    </main>
   );
 }

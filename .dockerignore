@@ -3,6 +3,7 @@
 .eslint*
 .prettier
 README.md
+.node_module
 npm-debug.log
 yarn-error.log
 Dockerfile

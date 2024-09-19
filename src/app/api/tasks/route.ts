@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 const prisma = new PrismaClient();
 
 // GET
-export async function GET(_request: Request) {
+export async function GET(request: Request) {
   try {
     const tasks = await prisma.task.findMany();
     return NextResponse.json(tasks, { status: 200 });
@@ -12,6 +12,7 @@ export async function GET(_request: Request) {
     return NextResponse.json({ error: 'Failed to fetch tasks -' }, { status: 500 });
   }
 }
+
 
 // POST
 export async function POST(request: Request) {
