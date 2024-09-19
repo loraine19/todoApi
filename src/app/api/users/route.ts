@@ -19,19 +19,16 @@ export async function GET(_request: Request) {
    
 export async function POST(request: Request) {
   try {
-    const { userName, email, password,task} = await request.json();
+    const { userName, email, password} = await request.json();
 
     // Vérifier que l'email est une chaîne de caractères valide
     if (!email || typeof email !== 'string') {
       return NextResponse.json({ error: 'Email is required and must be a string' }, { status: 400 });
     }
 
-    // Créer un nouvel employé avec Prisma
     const newuser = await prisma.user.create({
-      data: { userName, email, password,task  },
+      data: { userName, email, password  },
     });
-
-    // Retourner la réponse avec le nouvel employé créé
     return NextResponse.json(newuser, { status: 201 });
   } catch (error) {
     console.error('Failed to create user:', error);

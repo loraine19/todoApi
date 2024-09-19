@@ -16,7 +16,7 @@ datasource db {
 //USERS
 model user {
   id          Int          @id @default(autoincrement())
-  userName    String?
+  userName    String
   email       String       @unique
   password    String
   preferences preference[]
@@ -37,10 +37,10 @@ model task {
   id       Int        @id @default(autoincrement())
   content  String
   issue    DateTime   @default(now())
-  priority Int        @default(1)
+  priority Int?       @default(1)
   done     Boolean    @default(false)
   user     user?      @relation(fields: [userId], references: [id])
-  userId   Int
+  userId   Int?
   category category[]
 }
 
